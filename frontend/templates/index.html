@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="laptop-grid">
+    {% for laptop in laptops %}
+    <div class="laptop-card">
+        <h2 class="neon-text">{{ laptop.name }}</h2>
+        <p class="brand">{{ laptop.brand }}</p>
+        <p class="price">${{ laptop.price }}</p>
+        {% if laptop.avg_rating %}
+        <p class="rating">
+            <span class="neon-text">Rating: {{ "%.1f"|format(laptop.avg_rating) }}</span>
+            <span>({{ laptop.review_count if laptop.review_count else 0 }} reviews)</span>
+        </p>
+        {% endif %}
+        <div class="specs">
+            <h3>Specifications:</h3>
+            <ul>
+                {% for key, value in laptop.specs.items() %}
+                <li><strong>{{ key }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <a href="{{ url_for('laptop_detail', laptop_id=laptop._id) }}" class="cyber-button">View Details & Reviews</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %} 

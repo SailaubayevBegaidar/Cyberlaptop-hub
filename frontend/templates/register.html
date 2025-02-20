@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="cyber-container">
+    <div class="register-container">
+        <h2 class="neon-text">Join CyberHub</h2>
+        <div class="cyber-line"></div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="cyber-alert">
+                    <div class="alert-icon">⚠</div>
+                    <div class="alert-message">{{ message }}</div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('register') }}" class="cyber-form">
+            <div class="form-group">
+                <label for="username" class="cyber-label">Username</label>
+                <div class="input-wrapper">
+                    <input type="text" id="username" name="username" required>
+                    <div class="input-line"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="cyber-label">Email</label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" name="email" required>
+                    <div class="input-line"></div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="cyber-label">Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" name="password" required>
+                    <div class="input-line"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password" class="cyber-label">Confirm Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                    <div class="input-line"></div>
+                </div>
+            </div>
+
+            <button type="submit" class="cyber-button">
+                <span class="button-content">Register</span>
+                <span class="button-glitch"></span>
+            </button>
+        </form>
+
+        <div class="form-footer">
+            <p>Already have an account? <a href="{{ url_for('login') }}" class="neon-link">Login here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %} 
