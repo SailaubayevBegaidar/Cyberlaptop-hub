@@ -311,7 +311,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 <div align="center">
-  <p>Made with ❤️ by Your Name</p>
+  <p>Made with ❤️</p>
   <p>
     <a href="https://github.com/yourusername">Github</a> •
     <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
