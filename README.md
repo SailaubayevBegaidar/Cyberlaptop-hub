@@ -81,7 +81,7 @@
 
 1. **Clone Repository**
 ```bash
-git clone https://github.com/yourusername/cyberlaptop-hub.git
+git clone https://github.com/SailaubayevBegaidar/Cyberlaptop-hub
 cd cyberlaptop-hub
 ```
 
@@ -195,6 +195,78 @@ backend/
     ├── optimize.py
     └── seed_data.py
 ```
+
+
+
+### 📊 Collections
+
+#### Users Collection
+```json
+{
+    "_id": ObjectId,
+    "username": String,
+    "email": String,
+    "password": String (hashed),
+    "is_admin": Boolean,
+    "created_at": DateTime,
+    "last_login": DateTime
+}
+```
+
+#### Laptops Collection
+```json
+{
+    "_id": ObjectId,
+    "name": String,
+    "brand": String,
+    "price": Number,
+    "specs": {
+        "processor": String,
+        "ram": String,
+        "storage": String,
+        "display": String,
+        "gpu": String
+    },
+    "in_stock": Boolean,
+    "avg_rating": Number,
+    "review_count": Number,
+    "created_at": DateTime,
+    "updated_at": DateTime
+}
+```
+
+#### Reviews Collection
+```json
+{
+    "_id": ObjectId,
+    "laptop_id": ObjectId,
+    "user_username": String,
+    "rating": Number (1-5),
+    "comment": String,
+    "pros": Array[String],
+    "cons": Array[String],
+    "created_at": DateTime
+}
+```
+
+### 🔗 Relationships
+- Reviews.laptop_id → Laptops._id
+- Reviews.user_username → Users.username
+
+### 📑 Indexes
+- Users Collection:
+  - `username` (unique)
+  - `email` (unique)
+- Laptops Collection:
+  - `name` (text)
+  - `brand` (text)
+  - `price` (ascending)
+  - `avg_rating` (descending)
+- Reviews Collection:
+  - `laptop_id` (ascending)
+  - `user_username` (ascending)
+  - `rating` (descending)
+
 
 ## 🔒 Security Features
 - BCrypt password hashing
