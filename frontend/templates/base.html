@@ -27,6 +27,26 @@
             </div>
         </div>
     </nav>
+    <div class="search-section">
+        <div class="search-container">
+            <form id="searchForm" class="cyber-form search-form">
+                <div class="search-grid">
+                    <input type="text" id="searchQuery" class="cyber-input" placeholder="Search laptops...">
+                    <input type="number" id="minPrice" class="cyber-input" placeholder="Min price">
+                    <input type="number" id="maxPrice" class="cyber-input" placeholder="Max price">
+                    <select id="brand" class="cyber-select">
+                        <option value="">All Brands</option>
+                        <option value="Apple">Apple</option>
+                        <option value="Dell">Dell</option>
+                        <option value="Lenovo">Lenovo</option>
+                        <option value="HP">HP</option>
+                        <option value="Asus">Asus</option>
+                    </select>
+                    <button type="submit" class="cyber-button">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <main>
         {% block content %}{% endblock %}
     </main>

@@ -98,6 +98,10 @@ nav {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+    justify-content: space-between;
 }
 
 .laptop-card:hover {
@@ -134,6 +138,27 @@ nav {
     font-size: 1.5rem;
     font-weight: bold;
     margin: 1rem 0;
+}
+
+.laptop-card .content {
+    flex: 1;
+    margin-bottom: 2rem;
+}
+
+.laptop-card .cyber-button {
+    width: 100%;
+    padding: 1rem;
+    margin-top: auto;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+}
+
+.laptop-card .cyber-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px var(--neon-blue);
 }
 
 /* Формы */
@@ -195,121 +220,18 @@ button:hover {
 }
 
 /* Отзывы */
-.review-card {
-    background: var(--darker-bg);
-    padding: 1.5rem;
-    border: 1px solid var(--neon-blue);
-    border-radius: 5px;
-    margin-bottom: 1.5rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.review-rating {
-    color: var(--neon-pink);
-    font-size: 1.2rem;
-}
-
-.review-author {
-    color: var(--neon-blue);
-    font-weight: bold;
-}
-
-/* Анимации */
-@keyframes glow {
-    0% { box-shadow: 0 0 5px var(--neon-blue); }
-    50% { box-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--neon-pink); }
-    100% { box-shadow: 0 0 5px var(--neon-blue); }
-}
-
-/* Адаптивный дизайн */
-@media (max-width: 768px) {
-    .laptop-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .nav-wrapper {
-        flex-direction: column;
-        gap: 1rem;
-    }
-}
-
-.alert {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 4px;
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-.form-footer {
-    margin-top: 1rem;
-    text-align: center;
-}
-
-.form-footer a {
-    color: #333;
-    text-decoration: none;
-}
-
-.form-footer a:hover {
-    text-decoration: underline;
-}
-
-.admin-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: var(--darker-bg);
-    border: 1px solid var(--neon-blue);
-    border-radius: 5px;
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-}
-
-.admin-container h2 {
-    color: var(--neon-blue);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 2rem;
-}
-
-/* Таблица в админ-панели */
-.laptop-list table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    background: var(--darker-bg);
-    margin-top: 2rem;
-}
-
-.laptop-list th {
-    background: rgba(0, 243, 255, 0.1);
-    color: var(--neon-blue);
-    padding: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 1px solid var(--neon-blue);
-}
-
-.laptop-list td {
-    padding: 1rem;
-    color: #fff;
-    border-bottom: 1px solid rgba(0, 243, 255, 0.2);
-}
-
-/* Стили для отзывов */
 .reviews-list {
     margin-top: 2rem;
 }
 
 .review-card {
-    background: var(--darker-bg);
+    background: rgba(0, 0, 0, 0.95);
     padding: 1.5rem;
     border: 1px solid var(--neon-blue);
     border-radius: 5px;
     margin-bottom: 1.5rem;
     box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+    backdrop-filter: blur(5px);
 }
 
 .review-header {
@@ -324,49 +246,54 @@ button:hover {
 .review-rating {
     color: var(--neon-pink);
     font-size: 1.2rem;
+    text-shadow: 0 0 5px var(--neon-pink);
 }
 
 .review-author {
     color: var(--neon-blue);
     font-weight: bold;
+    text-shadow: 0 0 5px var(--neon-blue);
 }
 
 .review-date {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .review-comment {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.9);
     margin: 1rem 0;
     line-height: 1.6;
 }
 
 .review-pros, .review-cons {
     margin: 0.5rem 0;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .review-pros strong {
     color: var(--neon-blue);
+    text-shadow: 0 0 3px var(--neon-blue);
 }
 
 .review-cons strong {
     color: var(--neon-pink);
+    text-shadow: 0 0 3px var(--neon-pink);
 }
 
 .review-pros ul, .review-cons ul {
     margin: 0.5rem 0;
     padding-left: 1.5rem;
-    color: #fff;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .no-reviews {
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.8);
     padding: 2rem;
     border: 1px solid var(--neon-blue);
     border-radius: 5px;
-    background: var(--darker-bg);
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(5px);
 }
 
 /* Кнопки в админ-панели */
@@ -442,11 +369,12 @@ button:hover {
 }
 
 .review-form {
-    background: white;
+    background: rgba(0, 0, 0, 0.95);
     padding: 2rem;
-    border-radius: 8px;
+    border: 1px solid var(--neon-blue);
+    border-radius: 5px;
     margin: 2rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
 }
 
 .review-header {
@@ -635,4 +563,97 @@ select {
     .cyber-button {
         width: 100%;
     }
+}
+
+.cyber-card {
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.cyber-textarea {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--neon-blue);
+    border-radius: 3px;
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    resize: vertical;
+}
+
+.cyber-select {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--neon-blue);
+    border-radius: 3px;
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.cyber-input {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--neon-blue);
+    border-radius: 3px;
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.neon-blue {
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.neon-pink {
+    color: var(--neon-pink);
+    text-shadow: 0 0 5px var(--neon-pink);
+}
+
+.review-login-prompt {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid var(--neon-pink);
+    border-radius: 5px;
+    margin: 2rem 0;
+}
+
+.search-section {
+    background: rgba(10, 10, 15, 0.95);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--neon-blue);
+    margin-bottom: 2rem;
+}
+
+.search-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.search-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.search-form input,
+.search-form select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--neon-blue);
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.search-form input:focus,
+.search-form select:focus {
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 10px var(--neon-pink);
 } 

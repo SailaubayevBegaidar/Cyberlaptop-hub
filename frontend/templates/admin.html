@@ -2,85 +2,183 @@
 
 {% block content %}
 <div class="admin-container">
-    <h2>Admin Panel - Laptop Management</h2>
+    <h2 class="neon-text">Admin Panel - Laptop Management</h2>
     
     <!-- Форма добавления/редактирования ноутбука -->
-    <div class="form-container">
-        <h3>{% if edit_laptop %}Edit Laptop{% else %}Add New Laptop{% endif %}</h3>
-        <form method="POST" action="{{ url_for('admin_laptop_add') if not edit_laptop else url_for('admin_laptop_edit', laptop_id=edit_laptop._id) }}">
+    <div class="cyber-card form-container">
+        <h3 class="neon-text">{% if edit_laptop %}Edit Laptop{% else %}Add New Laptop{% endif %}</h3>
+        <form method="POST" action="{{ url_for('admin_laptop_add') if not edit_laptop else url_for('admin_laptop_edit', laptop_id=edit_laptop._id) }}" class="cyber-form">
             <div class="form-group">
-                <label for="name">Laptop Name:</label>
-                <input type="text" id="name" name="name" value="{{ edit_laptop.name if edit_laptop else '' }}" required>
+                <label for="name" class="cyber-label">Laptop Name:</label>
+                <input type="text" id="name" name="name" value="{{ edit_laptop.name if edit_laptop else '' }}" required class="cyber-input">
             </div>
             <div class="form-group">
-                <label for="brand">Brand:</label>
-                <input type="text" id="brand" name="brand" value="{{ edit_laptop.brand if edit_laptop else '' }}" required>
+                <label for="brand" class="cyber-label">Brand:</label>
+                <input type="text" id="brand" name="brand" value="{{ edit_laptop.brand if edit_laptop else '' }}" required class="cyber-input">
             </div>
             <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="number" id="price" name="price" value="{{ edit_laptop.price if edit_laptop else '' }}" required>
+                <label for="price" class="cyber-label">Price:</label>
+                <input type="number" id="price" name="price" value="{{ edit_laptop.price if edit_laptop else '' }}" required class="cyber-input">
             </div>
             <div class="form-group">
-                <label for="processor">Processor:</label>
-                <input type="text" id="processor" name="specs[processor]" value="{{ edit_laptop.specs.processor if edit_laptop else '' }}" required>
+                <label for="processor" class="cyber-label">Processor:</label>
+                <input type="text" id="processor" name="specs[processor]" value="{{ edit_laptop.specs.processor if edit_laptop else '' }}" required class="cyber-input">
             </div>
             <div class="form-group">
-                <label for="ram">RAM:</label>
-                <input type="text" id="ram" name="specs[ram]" value="{{ edit_laptop.specs.ram if edit_laptop else '' }}" required>
+                <label for="ram" class="cyber-label">RAM:</label>
+                <input type="text" id="ram" name="specs[ram]" value="{{ edit_laptop.specs.ram if edit_laptop else '' }}" required class="cyber-input">
             </div>
             <div class="form-group">
-                <label for="storage">Storage:</label>
-                <input type="text" id="storage" name="specs[storage]" value="{{ edit_laptop.specs.storage if edit_laptop else '' }}" required>
+                <label for="storage" class="cyber-label">Storage:</label>
+                <input type="text" id="storage" name="specs[storage]" value="{{ edit_laptop.specs.storage if edit_laptop else '' }}" required class="cyber-input">
             </div>
             <div class="form-group">
-                <label for="display">Display:</label>
-                <input type="text" id="display" name="specs[display]" value="{{ edit_laptop.specs.display if edit_laptop else '' }}" required>
+                <label for="display" class="cyber-label">Display:</label>
+                <input type="text" id="display" name="specs[display]" value="{{ edit_laptop.specs.display if edit_laptop else '' }}" required class="cyber-input">
             </div>
             <div class="form-group">
-                <label for="gpu">GPU:</label>
-                <input type="text" id="gpu" name="specs[gpu]" value="{{ edit_laptop.specs.gpu if edit_laptop else '' }}" required>
+                <label for="gpu" class="cyber-label">GPU:</label>
+                <input type="text" id="gpu" name="specs[gpu]" value="{{ edit_laptop.specs.gpu if edit_laptop else '' }}" required class="cyber-input">
             </div>
-            <div class="form-group">
-                <label for="in_stock">In Stock:</label>
-                <input type="checkbox" id="in_stock" name="in_stock" {% if edit_laptop and edit_laptop.in_stock %}checked{% endif %}>
+            <div class="form-group checkbox-group">
+                <label for="in_stock" class="cyber-label">In Stock:</label>
+                <input type="checkbox" id="in_stock" name="in_stock" class="cyber-checkbox" {% if edit_laptop and edit_laptop.in_stock %}checked{% endif %}>
             </div>
-            <button type="submit">{{ 'Update Laptop' if edit_laptop else 'Add Laptop' }}</button>
-            {% if edit_laptop %}
-                <a href="{{ url_for('admin') }}" class="button">Cancel Edit</a>
-            {% endif %}
+            <div class="button-group">
+                <button type="submit" class="cyber-button">{{ 'Update Laptop' if edit_laptop else 'Add Laptop' }}</button>
+                {% if edit_laptop %}
+                    <a href="{{ url_for('admin') }}" class="cyber-button cancel">Cancel Edit</a>
+                {% endif %}
+            </div>
         </form>
     </div>
 
     <!-- Список ноутбуков -->
-    <div class="laptop-list">
-        <h3>Existing Laptops</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Brand</th>
-                    <th>Price</th>
-                    <th>In Stock</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for laptop in laptops %}
-                <tr>
-                    <td>{{ laptop.name }}</td>
-                    <td>{{ laptop.brand }}</td>
-                    <td>${{ laptop.price }}</td>
-                    <td>{{ 'Yes' if laptop.in_stock else 'No' }}</td>
-                    <td>
-                        <a href="{{ url_for('admin_laptop_edit', laptop_id=laptop._id) }}" class="button edit">Edit</a>
-                        <form method="POST" action="{{ url_for('admin_laptop_delete', laptop_id=laptop._id) }}" style="display: inline;">
-                            <button type="submit" class="button delete" onclick="return confirm('Are you sure you want to delete this laptop?')">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="laptop-list cyber-card">
+        <h3 class="neon-text">Existing Laptops</h3>
+        <div class="table-container">
+            <table class="cyber-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Price</th>
+                        <th>In Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for laptop in laptops %}
+                    <tr>
+                        <td>{{ laptop.name }}</td>
+                        <td>{{ laptop.brand }}</td>
+                        <td class="neon-blue">${{ laptop.price }}</td>
+                        <td>
+                            <span class="status-badge {% if laptop.in_stock %}in-stock{% else %}out-of-stock{% endif %}">
+                                {{ 'Yes' if laptop.in_stock else 'No' }}
+                            </span>
+                        </td>
+                        <td class="actions">
+                            <a href="{{ url_for('admin_laptop_edit', laptop_id=laptop._id) }}" class="cyber-button edit">Edit</a>
+                            <form method="POST" action="{{ url_for('admin_laptop_delete', laptop_id=laptop._id) }}" style="display: inline;">
+                                <button type="submit" class="cyber-button delete" onclick="return confirm('Are you sure you want to delete this laptop?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+<style>
+.admin-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cyber-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid var(--neon-blue);
+}
+
+.cyber-table th,
+.cyber-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+    color: #fff;
+}
+
+.cyber-table th {
+    background: rgba(0, 243, 255, 0.1);
+    color: var(--neon-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.status-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
+
+.status-badge.in-stock {
+    background: rgba(0, 255, 0, 0.2);
+    border: 1px solid #00ff00;
+    color: #00ff00;
+}
+
+.status-badge.out-of-stock {
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid #ff0000;
+    color: #ff0000;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.cyber-button.edit {
+    background: rgba(0, 243, 255, 0.1);
+}
+
+.cyber-button.delete {
+    background: rgba(255, 0, 0, 0.1);
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+.cyber-button.delete:hover {
+    background: rgba(255, 0, 0, 0.2);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cyber-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--neon-blue);
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+</style>
 {% endblock %} 

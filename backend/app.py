@@ -277,19 +277,49 @@ def admin_laptop_delete(laptop_id):
 
 @app.route('/api/laptops/search')
 def search_laptops():
-    """Оптимизированный текстовый поиск по ноутбукам"""
     query = request.args.get('q', '')
-    if query:
-        # Использование текстового индекса
-        results = mongo.db.laptops.find(
-            {"$text": {"$search": query}},
-            {"score": {"$meta": "textScore"}}
-        ).sort([("score", {"$meta": "textScore"})])
-    else:
-        results = mongo.db.laptops.find()
+    min_price = request.args.get('min_price', type=float)
+    max_price = request.args.get('max_price', type=float)
+    brand = request.args.get('brand', '')
+    in_stock = request.args.get('in_stock', type=bool)
+
+    search_query = {}
     
-    laptops = list(results)
-    return jsonify([{**laptop, '_id': str(laptop['_id'])} for laptop in laptops])
+    # Текстовый поиск
+    if query:
+        search_query['$text'] = {'$search': query}
+    
+    # Фильтры
+    if brand:
+        search_query['brand'] = brand
+    if min_price is not None or max_price is not None:
+        search_query['price'] = {}
+        if min_price is not None:
+            search_query['price']['$gte'] = min_price
+        if max_price is not None:
+            search_query['price']['$lte'] = max_price
+    if in_stock is not None:
+        search_query['in_stock'] = in_stock
+
+    try:
+        # Используем соответствующий индекс в зависимости от параметров
+        if query:
+            results = mongo.db.laptops.find(
+                search_query,
+                {'score': {'$meta': 'textScore'}}
+            ).sort([('score', {'$meta': 'textScore'})])
+        elif brand and (min_price is not None or max_price is not None):
+            results = mongo.db.laptops.find(search_query).hint('brand_price_index')
+        elif min_price is not None or max_price is not None:
+            results = mongo.db.laptops.find(search_query).hint('price_index')
+        else:
+            results = mongo.db.laptops.find(search_query)
+
+        laptops = list(results)
+        return jsonify([{**laptop, '_id': str(laptop['_id'])} for laptop in laptops])
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/laptops/filter')
 def filter_laptops():

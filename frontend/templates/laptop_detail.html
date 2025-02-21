@@ -20,11 +20,11 @@
     <!-- Форма отзыва -->
     {% if current_user.is_authenticated %}
     <div class="review-form">
-        <h3>Leave a Review</h3>
-        <form method="POST" action="{{ url_for('add_review', laptop_id=laptop._id) }}">
+        <h3 class="neon-text">Leave a Review</h3>
+        <form method="POST" action="{{ url_for('add_review', laptop_id=laptop._id) }}" class="cyber-form">
             <div class="form-group">
-                <label for="rating">Rating:</label>
-                <select id="rating" name="rating" required>
+                <label for="rating" class="cyber-label">Rating:</label>
+                <select id="rating" name="rating" required class="cyber-select">
                     <option value="5">5 - Excellent</option>
                     <option value="4">4 - Good</option>
                     <option value="3">3 - Average</option>
@@ -33,34 +33,34 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="comment">Comment:</label>
-                <textarea id="comment" name="comment" rows="4" required></textarea>
+                <label for="comment" class="cyber-label">Comment:</label>
+                <textarea id="comment" name="comment" rows="4" required class="cyber-textarea"></textarea>
             </div>
             <div class="form-group">
-                <label for="pros">Pros:</label>
-                <input type="text" id="pros" name="pros" placeholder="Separate with commas">
+                <label for="pros" class="cyber-label">Pros:</label>
+                <input type="text" id="pros" name="pros" placeholder="Separate with commas" class="cyber-input">
             </div>
             <div class="form-group">
-                <label for="cons">Cons:</label>
-                <input type="text" id="cons" name="cons" placeholder="Separate with commas">
+                <label for="cons" class="cyber-label">Cons:</label>
+                <input type="text" id="cons" name="cons" placeholder="Separate with commas" class="cyber-input">
             </div>
-            <button type="submit">Submit Review</button>
+            <button type="submit" class="cyber-button">Submit Review</button>
         </form>
     </div>
     {% else %}
     <div class="review-login-prompt">
-        <p>Please <a href="{{ url_for('login') }}">login</a> to leave a review.</p>
+        <p>Please <a href="{{ url_for('login') }}" class="neon-link">login</a> to leave a review.</p>
     </div>
     {% endif %}
 
     <!-- Список отзывов -->
     <div class="reviews-list">
-        <h3>Reviews</h3>
+        <h3 class="neon-text">Reviews</h3>
         {% if reviews %}
             {% for review in reviews %}
-            <div class="review-card">
+            <div class="review-card cyber-card">
                 <div class="review-header">
-                    <span class="review-rating">
+                    <span class="review-rating neon-text">
                         {% for _ in range(review.rating) %}★{% endfor %}
                         {% for _ in range(5 - review.rating) %}☆{% endfor %}
                     </span>
@@ -70,7 +70,7 @@
                 <p class="review-comment">{{ review.comment }}</p>
                 {% if review.pros %}
                 <div class="review-pros">
-                    <strong>Pros:</strong>
+                    <strong class="neon-blue">Pros:</strong>
                     <ul>
                         {% for pro in review.pros %}
                         <li>{{ pro }}</li>
@@ -80,7 +80,7 @@
                 {% endif %}
                 {% if review.cons %}
                 <div class="review-cons">
-                    <strong>Cons:</strong>
+                    <strong class="neon-pink">Cons:</strong>
                     <ul>
                         {% for con in review.cons %}
                         <li>{{ con }}</li>
@@ -91,7 +91,7 @@
             </div>
             {% endfor %}
         {% else %}
-            <p class="no-reviews">No reviews yet. Be the first to review this laptop!</p>
+            <p class="no-reviews cyber-card">No reviews yet. Be the first to review this laptop!</p>
         {% endif %}
     </div>
 </div>

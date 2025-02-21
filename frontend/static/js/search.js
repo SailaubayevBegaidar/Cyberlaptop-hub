@@ -17,11 +17,43 @@ async function getLaptopStats() {
     updateStats(stats);
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('searchForm');
+    
+    searchForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const searchQuery = document.getElementById('searchQuery').value;
+        const minPrice = document.getElementById('minPrice').value;
+        const maxPrice = document.getElementById('maxPrice').value;
+        const brand = document.getElementById('brand').value;
+
+        const params = new URLSearchParams();
+        if (searchQuery) params.append('q', searchQuery);
+        if (minPrice) params.append('min_price', minPrice);
+        if (maxPrice) params.append('max_price', maxPrice);
+        if (brand) params.append('brand', brand);
+
+        try {
+            const response = await fetch(`/api/laptops/search?${params.toString()}`);
+            const laptops = await response.json();
+            updateLaptopList(laptops);
+        } catch (error) {
+            console.error('Error searching laptops:', error);
+        }
+    });
+});
+
 function updateLaptopList(laptops) {
     const container = document.querySelector('.laptop-grid');
+    if (!laptops.length) {
+        container.innerHTML = '<div class="no-results">No laptops found</div>';
+        return;
+    }
+
     container.innerHTML = laptops.map(laptop => `
         <div class="laptop-card">
-            <h2>${laptop.name}</h2>
+            <h2 class="neon-text">${laptop.name}</h2>
             <p class="brand">${laptop.brand}</p>
             <p class="price">$${laptop.price}</p>
             <div class="specs">
@@ -32,6 +64,7 @@ function updateLaptopList(laptops) {
                     ).join('')}
                 </ul>
             </div>
+            <a href="/laptop/${laptop._id}" class="cyber-button">View Details & Reviews</a>
         </div>
     `).join('');
 }

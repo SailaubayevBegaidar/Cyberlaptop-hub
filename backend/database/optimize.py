@@ -17,14 +17,30 @@ def setup_indexes():
         # Создание новых индексов для коллекции laptops
         print("Создание новых индексов...")
         laptop_indexes = [
-            IndexModel([("name", TEXT), ("brand", TEXT)], 
-                      name="text_search_index"),
-            IndexModel([("price", ASCENDING)], 
-                      name="price_index"),
+            # Полнотекстовый поиск по всем важным полям
+            IndexModel([
+                ("name", TEXT), 
+                ("brand", TEXT),
+                ("specs.processor", TEXT),
+                ("specs.gpu", TEXT),
+                ("specs.ram", TEXT)
+            ], name="full_text_search"),
+            
+            # Составные индексы для фильтрации и сортировки
             IndexModel([("brand", ASCENDING), ("price", ASCENDING)], 
                       name="brand_price_index"),
-            IndexModel([("in_stock", ASCENDING)], 
-                      name="stock_index")
+            IndexModel([("price", ASCENDING)], 
+                      name="price_index"),
+            IndexModel([("in_stock", ASCENDING), ("price", ASCENDING)], 
+                      name="stock_price_index"),
+            
+            # Индексы для спецификаций
+            IndexModel([("specs.processor", ASCENDING)], 
+                      name="processor_index"),
+            IndexModel([("specs.ram", ASCENDING)], 
+                      name="ram_index"),
+            IndexModel([("specs.gpu", ASCENDING)], 
+                      name="gpu_index")
         ]
         db.laptops.create_indexes(laptop_indexes)
         print("Индексы для laptops созданы")
@@ -68,6 +84,8 @@ def setup_indexes():
 
     except Exception as e:
         print(f"Ошибка при создании индексов: {e}")
+    finally:
+        client.close()
 
 if __name__ == "__main__":
     setup_indexes() 
